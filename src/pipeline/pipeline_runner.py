@@ -77,6 +77,10 @@ class ArticleSampleManager:
         ext = src.suffix or ".pdf"
         target_path = self.samples_dir / f"input_article_{idx}{ext}"
 
+        if src.resolve() == target_path.resolve():
+            logger.info("Input file already in samples/, skipping copy.")
+            return target_path
+
         logger.info("Copying local article to samples: %s -> %s", src, target_path)
         try:
             copy2(src, target_path)
